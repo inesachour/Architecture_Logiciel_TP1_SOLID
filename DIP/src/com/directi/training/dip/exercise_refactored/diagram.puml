@@ -1,0 +1,25 @@
+@startuml
+
+interface IDatabase{
+    int write(String inputString)
+}
+
+class MyDatabase implements IDatabase{
+    - {static} Map<Integer, String> _data;
+    - {static} int _count;
+    + int write(String inputString)
+}
+
+class EncodingModule{
+    + void encodeWithFiles()
+    + void encodeBasedOnNetworkAndDatabase(IDatabase db)
+}
+
+class EncodingModuleClient{
+    + {static} void main(String[] args)
+}
+
+EncodingModuleClient --> EncodingModule
+EncodingModuleClient --> IDatabase
+
+@enduml
