@@ -1,18 +1,31 @@
 @startuml
 
-interface IDatabase{
-    int write(String inputString)
+interface Reader{
+    String read()
 }
 
-class MyDatabase implements IDatabase{
+interface Writer{
+    int write(String val)
+}
+
+class MyDatabase implements Writer{
     - {static} Map<Integer, String> _data;
     - {static} int _count;
     + int write(String inputString)
 }
 
+class File implements Writer, Reader{
+    String read()
+    int write(String val)
+}
+
+class Network implements Reader{
+    String read()
+}
+
 class EncodingModule{
-    + void encodeWithFiles()
-    + void encodeBasedOnNetworkAndDatabase(IDatabase db)
+    + EncodingModule(Reader reader, Writer writer)
+    + void encode()
 }
 
 class EncodingModuleClient{
@@ -20,6 +33,10 @@ class EncodingModuleClient{
 }
 
 EncodingModuleClient --> EncodingModule
-EncodingModuleClient --> IDatabase
+EncodingModuleClient --> Reader
+EncodingModuleClient --> Writer
+
+EncodingModule --> Writer
+EncodingModule --> Reader
 
 @enduml
