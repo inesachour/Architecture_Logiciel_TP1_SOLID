@@ -1,16 +1,21 @@
 @startuml
 
-class Duck{
-    + void quack()
-    + void swim()
+interface Duck{
+    void quack()
+    void swim()
 }
 
-class ElectronicDuck{
+class ElectronicDuck implements Duck{
     - boolean _on
     + void quack()
     + void swim()
     + void turnOn()
     + void turnOff()
+}
+
+class RealDuck implements Duck{
+    + void quack()
+    + void swim()
 }
 
 class Pool{
@@ -20,7 +25,6 @@ class Pool{
     {static} + main(String[] args)
 }
 
-Duck ^-- ElectronicDuck
 Pool -> Duck
 
 @enduml
